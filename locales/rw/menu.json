@@ -1,0 +1,59 @@
+{
+  "file": {
+    "label": "Dosiye",
+    "newTab": "Itab nshya",
+    "newWindow": "Idirishya rishya",
+    "newIncognitoWindow": "Idirishya ry'ibanga",
+    "openFile": "Fungura dosiye...",
+    "closeTab": "Funga itab",
+    "closeWindow": "Funga idirishya",
+    "quit": "Sohoka"
+  },
+  "edit": {
+    "label": "Hindura",
+    "undo": "Subiza",
+    "redo": "Ongera",
+    "cut": "Kata",
+    "copy": "Kopi",
+    "paste": "Shyiramo",
+    "delete": "Siba",
+    "selectAll": "Hitamo byose",
+    "find": "Shakisha..."
+  },
+  "view": {
+    "label": "Reba",
+    "back": "Subira inyuma",
+    "forward": "Genda imbere",
+    "reload": "Ongera upakirishe",
+    "stop": "Hagarika",
+    "zoomIn": "Kora nini",
+    "zoomOut": "Kora gito",
+    "resetZoom": "Garura ingano",
+    "fullScreen": "Uzuza ecran"
+  },
+  "bookmarks": {
+    "label": "Iby'ingenzi",
+    "bookmarkPage": "Bika uyu rupapuro",
+    "bookmarkAllTabs": "Bika amataburo yose",
+    "showBookmarks": "Reba iby'ingenzi byose"
+  },
+  "history": {
+    "label": "Amateka",
+    "showHistory": "Reba amateka",
+    "clearHistory": "Siba amateka"
+  },
+  "window": {
+    "label": "Idirishya",
+    "minimize": "Kora gito",
+    "zoom": "Kora nini",
+    "close": "Funga",
+    "bringToFront": "Zana imbere"
+  },
+  "help": {
+    "label": "Ubufasha",
+    "about": "Aho Wing Browser iherereye",
+    "help": "Ubufasha bwa Wing",
+    "reportIssue": "Raporo ikibazo",
+    "devTools": "Ibikoresho by'abatunganya"
+  }
+}

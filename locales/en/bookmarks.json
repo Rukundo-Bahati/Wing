@@ -1,0 +1,17 @@
+{
+  "title": "Bookmarks",
+  "addBookmark": "Add Bookmark",
+  "editBookmark": "Edit Bookmark",
+  "deleteBookmark": "Delete Bookmark",
+  "bookmarkAdded": "Bookmark Added",
+  "bookmarkRemoved": "Bookmark Removed",
+  "folderName": "Folder Name",
+  "bookmarkName": "Name",
+  "bookmarkUrl": "URL",
+  "createFolder": "Create Folder",
+  "deleteFolder": "Delete Folder",
+  "noBookmarks": "No Bookmarks",
+  "searchBookmarks": "Search Bookmarks...",
+  "allBookmarks": "All Bookmarks",
+  "recentlyAdded": "Recently Added"
+}

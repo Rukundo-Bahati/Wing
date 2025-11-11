@@ -1,0 +1,59 @@
+{
+  "file": {
+    "label": "File",
+    "newTab": "New Tab",
+    "newWindow": "New Window",
+    "newIncognitoWindow": "New Incognito Window",
+    "openFile": "Open File...",
+    "closeTab": "Close Tab",
+    "closeWindow": "Close Window",
+    "quit": "Quit"
+  },
+  "edit": {
+    "label": "Edit",
+    "undo": "Undo",
+    "redo": "Redo",
+    "cut": "Cut",
+    "copy": "Copy",
+    "paste": "Paste",
+    "delete": "Delete",
+    "selectAll": "Select All",
+    "find": "Find..."
+  },
+  "view": {
+    "label": "View",
+    "back": "Back",
+    "forward": "Forward",
+    "reload": "Reload",
+    "stop": "Stop",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "resetZoom": "Reset Zoom",
+    "fullScreen": "Full Screen"
+  },
+  "bookmarks": {
+    "label": "Bookmarks",
+    "bookmarkPage": "Bookmark This Page",
+    "bookmarkAllTabs": "Bookmark All Tabs",
+    "showBookmarks": "Show All Bookmarks"
+  },
+  "history": {
+    "label": "History",
+    "showHistory": "Show History",
+    "clearHistory": "Clear History"
+  },
+  "window": {
+    "label": "Window",
+    "minimize": "Minimize",
+    "zoom": "Zoom",
+    "close": "Close",
+    "bringToFront": "Bring to Front"
+  },
+  "help": {
+    "label": "Help",
+    "about": "About Wing Browser",
+    "help": "Wing Help",
+    "reportIssue": "Report Issue",
+    "devTools": "Developer Tools"
+  }
+}

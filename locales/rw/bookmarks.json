@@ -1,0 +1,17 @@
+{
+  "title": "Iby'ingenzi",
+  "addBookmark": "Ongeraho iby'ingenzi",
+  "editBookmark": "Hindura iby'ingenzi",
+  "deleteBookmark": "Siba iby'ingenzi",
+  "bookmarkAdded": "Byabitswe",
+  "bookmarkRemoved": "Byasibwe",
+  "folderName": "Izina ry'ububiko",
+  "bookmarkName": "Izina",
+  "bookmarkUrl": "URL",
+  "createFolder": "Kora ububiko",
+  "deleteFolder": "Siba ububiko",
+  "noBookmarks": "Nta by'ingenzi",
+  "searchBookmarks": "Shakisha iby'ingenzi...",
+  "allBookmarks": "Iby'ingenzi byose",
+  "recentlyAdded": "Byashyizweho vuba aha"
+}

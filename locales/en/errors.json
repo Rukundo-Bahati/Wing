@@ -1,0 +1,29 @@
+{
+  "network": {
+    "ERR_CONNECTION_REFUSED": "Connection refused by server",
+    "ERR_NAME_NOT_RESOLVED": "Domain name could not be resolved",
+    "ERR_INTERNET_DISCONNECTED": "No internet connection",
+    "ERR_CONNECTION_TIMED_OUT": "Connection timed out",
+    "ERR_CONNECTION_RESET": "Connection was reset",
+    "ERR_NETWORK_CHANGED": "Network changed"
+  },
+  "security": {
+    "ERR_CERT_INVALID": "Server certificate is invalid",
+    "ERR_CERT_DATE_INVALID": "Certificate date is invalid",
+    "ERR_CERT_AUTHORITY_INVALID": "Certificate authority is invalid",
+    "ERR_INSECURE_RESPONSE": "Response is not secure",
+    "ERR_SSL_PROTOCOL_ERROR": "SSL protocol error"
+  },
+  "application": {
+    "ERR_OUT_OF_MEMORY": "Out of memory",
+    "ERR_FILE_NOT_FOUND": "File not found",
+    "ERR_ACCESS_DENIED": "Access denied",
+    "ERR_UNKNOWN": "Unknown error"
+  },
+  "messages": {
+    "pageLoadError": "Error loading page",
+    "tryAgain": "Try Again",
+    "goBack": "Go Back",
+    "checkConnection": "Check your internet connection"
+  }
+}

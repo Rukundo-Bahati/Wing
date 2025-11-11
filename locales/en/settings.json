@@ -1,0 +1,40 @@
+{
+  "title": "Settings",
+  "general": {
+    "title": "General",
+    "language": "Language",
+    "homepage": "Homepage",
+    "defaultSearchEngine": "Default Search Engine",
+    "downloadsLocation": "Downloads Location"
+  },
+  "appearance": {
+    "title": "Appearance",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "fontSize": "Font Size",
+    "fontFamily": "Font Family",
+    "zoom": "Zoom"
+  },
+  "privacy": {
+    "title": "Privacy",
+    "blockTrackers": "Block Trackers",
+    "blockThirdPartyCookies": "Block Third-Party Cookies",
+    "doNotTrack": "Do Not Track",
+    "httpsOnly": "HTTPS Only",
+    "clearBrowsingData": "Clear Browsing Data",
+    "safeMode": "Safe Mode"
+  },
+  "search": {
+    "title": "Search",
+    "defaultEngine": "Default Search Engine",
+    "showSuggestions": "Show Suggestions",
+    "searchEngines": "Search Engines"
+  },
+  "advanced": {
+    "title": "Advanced",
+    "hardwareAcceleration": "Hardware Acceleration",
+    "developerMode": "Developer Mode"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "app": {
+    "name": "Wing Browser",
+    "tagline": "Internet in Kinyarwanda"
+  },
+  "actions": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "open": "Open",
+    "search": "Search",
+    "loading": "Loading...",
+    "retry": "Retry",
+    "back": "Back",
+    "forward": "Forward",
+    "refresh": "Refresh",
+    "stop": "Stop",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "time": {
+    "justNow": "Just now",
+    "minutesAgo": "{count} minutes ago",
+    "hoursAgo": "{count} hours ago",
+    "daysAgo": "{count} days ago",
+    "weeksAgo": "{count} weeks ago"
+  },
+  "status": {
+    "online": "Online",
+    "offline": "Offline",
+    "connecting": "Connecting...",
+    "error": "Error",
+    "success": "Success"
+  }
+}

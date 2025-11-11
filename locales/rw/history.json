@@ -1,0 +1,21 @@
+{
+  "title": "Amateka",
+  "clearHistory": "Siba amateka",
+  "clearHistoryConfirm": "Urashaka rwose gusiba amateka?",
+  "historyCleared": "Amateka yasibwe",
+  "noHistory": "Nta mateka",
+  "searchHistory": "Shakisha mu mateka...",
+  "today": "Uyu munsi",
+  "yesterday": "Ejo hashize",
+  "lastWeek": "Icyumweru gishize",
+  "lastMonth": "Ukwezi gushize",
+  "older": "Kera",
+  "visitCount": "Wasuye {count} inshuro",
+  "timeRange": {
+    "hour": "Isaha imwe ishize",
+    "day": "Umunsi umwe ushize",
+    "week": "Icyumweru gishize",
+    "month": "Ukwezi gushize",
+    "all": "Byose"
+  }
+}

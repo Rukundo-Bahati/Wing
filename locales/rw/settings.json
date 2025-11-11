@@ -1,0 +1,40 @@
+{
+  "title": "Igenamiterere",
+  "general": {
+    "title": "Rusange",
+    "language": "Ururimi",
+    "homepage": "Urupapuro rw'itangiriro",
+    "defaultSearchEngine": "Mushakisha usanzwe",
+    "downloadsLocation": "Aho ibikurwa bishyirwa"
+  },
+  "appearance": {
+    "title": "Isura",
+    "theme": "Insanganyamatsiko",
+    "light": "Urumuri",
+    "dark": "Umwijima",
+    "system": "Sisitemu",
+    "fontSize": "Ingano y'imyandikire",
+    "fontFamily": "Ubwoko bw'imyandikire",
+    "zoom": "Ingano"
+  },
+  "privacy": {
+    "title": "Ibanga",
+    "blockTrackers": "Hagarika abakurikirana",
+    "blockThirdPartyCookies": "Hagarika cookies z'abandi",
+    "doNotTrack": "Ntukurikire",
+    "httpsOnly": "HTTPS gusa",
+    "clearBrowsingData": "Siba amakuru y'urubugari",
+    "safeMode": "Uburyo buteguwe"
+  },
+  "search": {
+    "title": "Gushakisha",
+    "defaultEngine": "Mushakisha usanzwe",
+    "showSuggestions": "Erekana ibyifuzo",
+    "searchEngines": "Mushakisha"
+  },
+  "advanced": {
+    "title": "Byimbitse",
+    "hardwareAcceleration": "Kwihuta kwa hardware",
+    "developerMode": "Uburyo bw'abatunganya"
+  }
+}

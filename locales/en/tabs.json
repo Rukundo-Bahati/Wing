@@ -1,0 +1,15 @@
+{
+  "newTab": "New Tab",
+  "closeTab": "Close Tab",
+  "closeOtherTabs": "Close Other Tabs",
+  "closeTabsToRight": "Close Tabs to the Right",
+  "closeTabsToLeft": "Close Tabs to the Left",
+  "pinTab": "Pin Tab",
+  "unpinTab": "Unpin Tab",
+  "muteTab": "Mute Tab",
+  "unmuteTab": "Unmute Tab",
+  "duplicateTab": "Duplicate Tab",
+  "reloadTab": "Reload Tab",
+  "loading": "Loading...",
+  "untitled": "Untitled"
+}

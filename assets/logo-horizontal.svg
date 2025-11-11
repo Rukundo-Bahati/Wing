@@ -1,0 +1,38 @@
+<svg width="800" height="240" viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0066CC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00A1DE;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="accent" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FAD201;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FDB913;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#20AA4F;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Icon Circle Background -->
+  <circle cx="120" cy="120" r="100" fill="url(#bg)"/>
+  
+  <!-- Simple "W" -->
+  <path d="M 60 85 L 85 155 L 120 105 L 155 155 L 180 85" 
+        stroke="url(#accent)" 
+        stroke-width="22" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none"/>
+  
+  <!-- Text: Wing Browser -->
+  <text x="260" y="110" font-family="Arial, sans-serif" font-size="64" font-weight="700" fill="#0066CC">
+    Wing
+  </text>
+  <text x="260" y="170" font-family="Arial, sans-serif" font-size="48" font-weight="400" fill="#333333">
+    Browser
+  </text>
+  
+  <!-- Tagline in Kinyarwanda -->
+  <text x="260" y="205" font-family="Arial, sans-serif" font-size="20" font-weight="300" fill="#666666" font-style="italic">
+    Internet mu Kinyarwanda
+  </text>
+</svg>

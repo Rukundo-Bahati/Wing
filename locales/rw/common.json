@@ -1,0 +1,38 @@
+{
+  "app": {
+    "name": "Wing Browser",
+    "tagline": "Internet mu Kinyarwanda"
+  },
+  "actions": {
+    "ok": "Yego",
+    "cancel": "Hagarika",
+    "save": "Bika",
+    "delete": "Siba",
+    "edit": "Hindura",
+    "close": "Funga",
+    "open": "Fungura",
+    "search": "Shakisha",
+    "loading": "Birapakira...",
+    "retry": "Ongera ugerageze",
+    "back": "Subira inyuma",
+    "forward": "Genda imbere",
+    "refresh": "Ongera upakirishe",
+    "stop": "Hagarika",
+    "yes": "Yego",
+    "no": "Oya"
+  },
+  "time": {
+    "justNow": "Ubu",
+    "minutesAgo": "{count} iminota ishize",
+    "hoursAgo": "{count} amasaha ashize",
+    "daysAgo": "{count} iminsi ishize",
+    "weeksAgo": "{count} ibyumweru bishize"
+  },
+  "status": {
+    "online": "Uri kumurongo",
+    "offline": "Ntabwo uri kumurongo",
+    "connecting": "Birahuzwa...",
+    "error": "Ikosa",
+    "success": "Byagenze neza"
+  }
+}

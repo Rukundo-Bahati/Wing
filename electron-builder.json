@@ -1,0 +1,129 @@
+{
+  "appId": "rw.wing.browser",
+  "productName": "Wing Browser",
+  "copyright": "Copyright © 2025 Wing Browser Team",
+  "directories": {
+    "output": "release",
+    "buildResources": "assets"
+  },
+  "files": [
+    "dist/**/*",
+    "package.json",
+    "locales/**/*"
+  ],
+  "extraResources": [
+    {
+      "from": "locales",
+      "to": "locales"
+    }
+  ],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64", "ia32"]
+      },
+      {
+        "target": "portable",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "assets/icon.ico",
+    "artifactName": "${productName}-${version}-${arch}.${ext}",
+    "publisherName": "Wing Browser Team"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Wing Browser",
+    "perMachine": false,
+    "installerIcon": "assets/icon.ico",
+    "uninstallerIcon": "assets/icon.ico",
+    "installerHeaderIcon": "assets/icon.ico",
+    "deleteAppDataOnUninstall": false
+  },
+  "portable": {
+    "artifactName": "${productName}-${version}-portable.${ext}"
+  },
+  "linux": {
+    "target": [
+      {
+        "target": "AppImage",
+        "arch": ["x64"]
+      },
+      {
+        "target": "deb",
+        "arch": ["x64"]
+      },
+      {
+        "target": "rpm",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "assets/icon.png",
+    "category": "Network",
+    "synopsis": "Rwanda's first browser in Kinyarwanda",
+    "description": "Wing Browser is a modern web browser designed for Rwandan users, fully localized in Kinyarwanda with privacy-first features.",
+    "desktop": {
+      "Name": "Wing Browser",
+      "Comment": "Internet mu Kinyarwanda",
+      "GenericName": "Web Browser",
+      "Keywords": "browser;web;internet;kinyarwanda;rwanda",
+      "Categories": "Network;WebBrowser"
+    }
+  },
+  "deb": {
+    "depends": [
+      "gconf2",
+      "gconf-service",
+      "libnotify4",
+      "libappindicator1",
+      "libxtst6",
+      "libnss3"
+    ]
+  },
+  "mac": {
+    "target": [
+      {
+        "target": "dmg",
+        "arch": ["x64", "arm64"]
+      },
+      {
+        "target": "zip",
+        "arch": ["x64", "arm64"]
+      }
+    ],
+    "icon": "assets/icon.icns",
+    "category": "public.app-category.productivity",
+    "hardenedRuntime": true,
+    "gatekeeperAssess": false,
+    "entitlements": "build/entitlements.mac.plist",
+    "entitlementsInherit": "build/entitlements.mac.plist"
+  },
+  "dmg": {
+    "contents": [
+      {
+        "x": 130,
+        "y": 220
+      },
+      {
+        "x": 410,
+        "y": 220,
+        "type": "link",
+        "path": "/Applications"
+      }
+    ],
+    "window": {
+      "width": 540,
+      "height": 380
+    }
+  },
+  "publish": {
+    "provider": "github",
+    "owner": "wing-browser",
+    "repo": "wing-browser",
+    "releaseType": "release"
+  }
+}

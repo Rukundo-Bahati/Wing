@@ -1,0 +1,29 @@
+{
+  "network": {
+    "ERR_CONNECTION_REFUSED": "Ntibyashobotse guhuza na seriveri",
+    "ERR_NAME_NOT_RESOLVED": "Ntibyashobotse kubona izina rya domaine",
+    "ERR_INTERNET_DISCONNECTED": "Nta murongo wa interineti",
+    "ERR_CONNECTION_TIMED_OUT": "Igihe cy'uguhuza cyarengeje",
+    "ERR_CONNECTION_RESET": "Guhuza byahagaritswe",
+    "ERR_NETWORK_CHANGED": "Umuyoboro wahinduwe"
+  },
+  "security": {
+    "ERR_CERT_INVALID": "Icyangombwa cya seriveri ntabwo cyemewe",
+    "ERR_CERT_DATE_INVALID": "Itariki y'icyangombwa ntabwo ari yo",
+    "ERR_CERT_AUTHORITY_INVALID": "Ubuyobozi bw'icyangombwa ntabwo bwemewe",
+    "ERR_INSECURE_RESPONSE": "Igisubizo ntabwo kiri giteguwe",
+    "ERR_SSL_PROTOCOL_ERROR": "Ikosa rya protocole ya SSL"
+  },
+  "application": {
+    "ERR_OUT_OF_MEMORY": "Ububiko bwa memoire burangiye",
+    "ERR_FILE_NOT_FOUND": "Dosiye ntiyabonetse",
+    "ERR_ACCESS_DENIED": "Uruhushya rwahakanwe",
+    "ERR_UNKNOWN": "Ikosa ritazwi"
+  },
+  "messages": {
+    "pageLoadError": "Ikosa mu gupakira urupapuro",
+    "tryAgain": "Ongera ugerageze",
+    "goBack": "Subira inyuma",
+    "checkConnection": "Reba uguhuza kwawe kwa interineti"
+  }
+}
