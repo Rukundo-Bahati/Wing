@@ -19,11 +19,9 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
-    "better-sqlite3": "^9.2.2",
     "electron-store": "^8.1.0",
     "electron-updater": "^6.6.2",
     "lucide-react": "^0.553.0",
-    "nodehun": "^3.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.0.4",

@@ -58,6 +58,12 @@
   transform: rotate(0deg) scale(1.05);
 }
 
+.logo-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
 .new-tab-title {
   font-size: 48px;
   font-weight: 800;
@@ -165,8 +171,8 @@
 
 .quick-links {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
 }
 
 .quick-link {

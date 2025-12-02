@@ -1,6 +1,4 @@
-import Database from 'better-sqlite3';
-import { app } from 'electron';
-import path from 'path';
+import Store from 'electron-store';
 
 export interface Bookmark {
   id: string;
@@ -40,254 +38,128 @@ export interface HistoryOptions {
 }
 
 class StorageService {
-  private db: Database.Database | null = null;
-  private dbPath: string;
+  private store: Store<{
+    bookmarks: Bookmark[];
+    history: HistoryEntry[];
+    downloads: Download[];
+    settings: Record<string, any>;
+  }>;
 
   constructor() {
-    const userDataPath = app.getPath('userData');
-    this.dbPath = path.join(userDataPath, 'wing-browser.db');
+    this.store = new Store<{
+      bookmarks: Bookmark[];
+      history: HistoryEntry[];
+      downloads: Download[];
+      settings: Record<string, any>;
+    }>({
+      name: 'wing-browser',
+      defaults: {
+        bookmarks: [] as Bookmark[],
+        history: [] as HistoryEntry[],
+        downloads: [] as Download[],
+        settings: {} as Record<string, any>
+      }
+    });
   }
 
   initialize(): void {
-    this.db = new Database(this.dbPath);
-    this.db.pragma('journal_mode = WAL');
-    this.createTables();
-    this.runMigrations();
+    // No initialization needed for electron-store
   }
 
-  private createTables(): void {
-    if (!this.db) return;
 
-    // Bookmarks table
-    this.db.exec(`
-      CREATE TABLE IF NOT EXISTS bookmarks (
-        id TEXT PRIMARY KEY,
-        title TEXT NOT NULL,
-        url TEXT NOT NULL,
-        folder_id TEXT,
-        favicon TEXT,
-        created_at INTEGER NOT NULL,
-        tags TEXT
-      )
-    `);
-
-    // Bookmark folders table
-    this.db.exec(`
-      CREATE TABLE IF NOT EXISTS bookmark_folders (
-        id TEXT PRIMARY KEY,
-        name TEXT NOT NULL,
-        parent_id TEXT,
-        created_at INTEGER NOT NULL
-      )
-    `);
-
-    // History table
-    this.db.exec(`
-      CREATE TABLE IF NOT EXISTS history (
-        id TEXT PRIMARY KEY,
-        url TEXT NOT NULL,
-        title TEXT NOT NULL,
-        visit_time INTEGER NOT NULL,
-        visit_count INTEGER DEFAULT 1
-      )
-    `);
-
-    // Create index for history queries
-    this.db.exec(`
-      CREATE INDEX IF NOT EXISTS idx_history_visit_time 
-      ON history(visit_time DESC)
-    `);
-
-    this.db.exec(`
-      CREATE INDEX IF NOT EXISTS idx_history_url 
-      ON history(url)
-    `);
-
-    // Settings table
-    this.db.exec(`
-      CREATE TABLE IF NOT EXISTS settings (
-        key TEXT PRIMARY KEY,
-        value TEXT NOT NULL,
-        updated_at INTEGER NOT NULL
-      )
-    `);
-
-    // Downloads table
-    this.db.exec(`
-      CREATE TABLE IF NOT EXISTS downloads (
-        id TEXT PRIMARY KEY,
-        url TEXT NOT NULL,
-        filename TEXT NOT NULL,
-        path TEXT NOT NULL,
-        total_bytes INTEGER NOT NULL,
-        received_bytes INTEGER NOT NULL,
-        state TEXT NOT NULL,
-        start_time INTEGER NOT NULL,
-        end_time INTEGER
-      )
-    `);
-  }
-
-  private runMigrations(): void {
-    // Future migrations will go here
-    // Example: ALTER TABLE, CREATE INDEX, etc.
-  }
 
   // Bookmarks
   addBookmark(bookmark: Omit<Bookmark, 'id' | 'createdAt'>): Bookmark {
-    if (!this.db) throw new Error('Database not initialized');
-
     const id = this.generateId();
     const createdAt = new Date();
-    const tags = bookmark.tags ? JSON.stringify(bookmark.tags) : null;
-
-    const stmt = this.db.prepare(`
-      INSERT INTO bookmarks (id, title, url, folder_id, favicon, created_at, tags)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `);
-
-    stmt.run(
-      id,
-      bookmark.title,
-      bookmark.url,
-      bookmark.folderId || null,
-      bookmark.favicon || null,
-      createdAt.getTime(),
-      tags
-    );
-
-    return {
+    const newBookmark: Bookmark = {
       id,
       ...bookmark,
       createdAt,
     };
+
+    const bookmarks = this.store.get('bookmarks');
+    bookmarks.push(newBookmark);
+    this.store.set('bookmarks', bookmarks);
+
+    return newBookmark;
   }
 
   removeBookmark(id: string): void {
-    if (!this.db) throw new Error('Database not initialized');
-
-    const stmt = this.db.prepare('DELETE FROM bookmarks WHERE id = ?');
-    stmt.run(id);
+    const bookmarks = this.store.get('bookmarks');
+    const filteredBookmarks = bookmarks.filter(b => b.id !== id);
+    this.store.set('bookmarks', filteredBookmarks);
   }
 
   getBookmarks(folderId?: string): Bookmark[] {
-    if (!this.db) throw new Error('Database not initialized');
-
-    const stmt = folderId
-      ? this.db.prepare('SELECT * FROM bookmarks WHERE folder_id = ? ORDER BY created_at DESC')
-      : this.db.prepare(
-          'SELECT * FROM bookmarks WHERE folder_id IS NULL ORDER BY created_at DESC'
-        );
-
-    const rows = folderId ? stmt.all(folderId) : stmt.all();
-
-    return rows.map((row: any) => ({
-      id: row.id,
-      title: row.title,
-      url: row.url,
-      folderId: row.folder_id,
-      favicon: row.favicon,
-      createdAt: new Date(row.created_at),
-      tags: row.tags ? JSON.parse(row.tags) : undefined,
-    }));
+    const bookmarks = this.store.get('bookmarks', []);
+    if (folderId) {
+      return bookmarks.filter(b => b.folderId === folderId).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    }
+    return bookmarks.filter(b => !b.folderId).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   }
 
   searchBookmarks(query: string): Bookmark[] {
-    if (!this.db) throw new Error('Database not initialized');
-
-    const stmt = this.db.prepare(`
-      SELECT * FROM bookmarks 
-      WHERE title LIKE ? OR url LIKE ?
-      ORDER BY created_at DESC
-      LIMIT 50
-    `);
-
-    const searchPattern = `%${query}%`;
-    const rows = stmt.all(searchPattern, searchPattern);
-
-    return rows.map((row: any) => ({
-      id: row.id,
-      title: row.title,
-      url: row.url,
-      folderId: row.folder_id,
-      favicon: row.favicon,
-      createdAt: new Date(row.created_at),
-      tags: row.tags ? JSON.parse(row.tags) : undefined,
-    }));
+    const bookmarks = this.store.get('bookmarks', []);
+    const searchPattern = query.toLowerCase();
+    return bookmarks
+      .filter(b =>
+        b.title.toLowerCase().includes(searchPattern) ||
+        b.url.toLowerCase().includes(searchPattern)
+      )
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice(0, 50);
   }
 
   // History
   addHistoryEntry(entry: Omit<HistoryEntry, 'id' | 'visitCount'>): void {
-    if (!this.db) throw new Error('Database not initialized');
+    const history = this.store.get('history');
+    const existingIndex = history.findIndex(h => h.url === entry.url);
 
-    // Check if URL already exists
-    const existing = this.db
-      .prepare('SELECT id, visit_count FROM history WHERE url = ?')
-      .get(entry.url) as any;
-
-    if (existing) {
+    if (existingIndex !== -1) {
       // Update existing entry
-      this.db
-        .prepare(
-          `
-        UPDATE history 
-        SET title = ?, visit_time = ?, visit_count = visit_count + 1
-        WHERE id = ?
-      `
-        )
-        .run(entry.title, entry.visitTime.getTime(), existing.id);
+      history[existingIndex] = {
+        ...history[existingIndex],
+        title: entry.title,
+        visitTime: entry.visitTime,
+        visitCount: history[existingIndex].visitCount + 1,
+      };
     } else {
       // Insert new entry
       const id = this.generateId();
-      this.db
-        .prepare(
-          `
-        INSERT INTO history (id, url, title, visit_time, visit_count)
-        VALUES (?, ?, ?, ?, 1)
-      `
-        )
-        .run(id, entry.url, entry.title, entry.visitTime.getTime());
+      const newEntry: HistoryEntry = {
+        id,
+        ...entry,
+        visitCount: 1,
+      };
+      history.push(newEntry);
     }
+
+    this.store.set('history', history);
   }
 
   getHistory(options: HistoryOptions = {}): HistoryEntry[] {
-    if (!this.db) throw new Error('Database not initialized');
-
     const { limit = 100, offset = 0, startDate, endDate } = options;
+    let history = this.store.get('history', []);
 
-    let query = 'SELECT * FROM history WHERE 1=1';
-    const params: any[] = [];
-
+    // Filter by date range
     if (startDate) {
-      query += ' AND visit_time >= ?';
-      params.push(startDate.getTime());
+      history = history.filter(h => h.visitTime >= startDate);
     }
-
     if (endDate) {
-      query += ' AND visit_time <= ?';
-      params.push(endDate.getTime());
+      history = history.filter(h => h.visitTime <= endDate);
     }
 
-    query += ' ORDER BY visit_time DESC LIMIT ? OFFSET ?';
-    params.push(limit, offset);
+    // Sort by visit time descending
+    history.sort((a, b) => b.visitTime.getTime() - a.visitTime.getTime());
 
-    const stmt = this.db.prepare(query);
-    const rows = stmt.all(...params);
-
-    return rows.map((row: any) => ({
-      id: row.id,
-      url: row.url,
-      title: row.title,
-      visitTime: new Date(row.visit_time),
-      visitCount: row.visit_count,
-    }));
+    // Apply pagination
+    return history.slice(offset, offset + limit);
   }
 
   clearHistory(timeRange: 'hour' | 'day' | 'week' | 'month' | 'all'): void {
-    if (!this.db) throw new Error('Database not initialized');
-
     if (timeRange === 'all') {
-      this.db.prepare('DELETE FROM history').run();
+      this.store.set('history', []);
       return;
     }
 
@@ -300,133 +172,58 @@ class StorageService {
     };
 
     const cutoff = now - ranges[timeRange];
-    this.db.prepare('DELETE FROM history WHERE visit_time >= ?').run(cutoff);
+    const history = this.store.get('history');
+    const filteredHistory = history.filter(h => h.visitTime.getTime() >= cutoff);
+    this.store.set('history', filteredHistory);
   }
 
   searchHistory(query: string): HistoryEntry[] {
-    if (!this.db) throw new Error('Database not initialized');
-
-    const stmt = this.db.prepare(`
-      SELECT * FROM history 
-      WHERE title LIKE ? OR url LIKE ?
-      ORDER BY visit_time DESC
-      LIMIT 50
-    `);
-
-    const searchPattern = `%${query}%`;
-    const rows = stmt.all(searchPattern, searchPattern);
-
-    return rows.map((row: any) => ({
-      id: row.id,
-      url: row.url,
-      title: row.title,
-      visitTime: new Date(row.visit_time),
-      visitCount: row.visit_count,
-    }));
+    const history = this.store.get('history', []);
+    const searchPattern = query.toLowerCase();
+    return history
+      .filter(h =>
+        h.title.toLowerCase().includes(searchPattern) ||
+        h.url.toLowerCase().includes(searchPattern)
+      )
+      .sort((a, b) => b.visitTime.getTime() - a.visitTime.getTime())
+      .slice(0, 50);
   }
 
   // Settings
   getSetting<T>(key: string): T | null {
-    if (!this.db) throw new Error('Database not initialized');
-
-    const stmt = this.db.prepare('SELECT value FROM settings WHERE key = ?');
-    const row = stmt.get(key) as any;
-
-    if (!row) return null;
-
-    try {
-      return JSON.parse(row.value);
-    } catch {
-      return row.value as T;
-    }
+    const settings = this.store.get('settings');
+    return settings[key] || null;
   }
 
   setSetting<T>(key: string, value: T): void {
-    if (!this.db) throw new Error('Database not initialized');
-
-    const serialized = typeof value === 'string' ? value : JSON.stringify(value);
-    const now = Date.now();
-
-    const stmt = this.db.prepare(`
-      INSERT INTO settings (key, value, updated_at)
-      VALUES (?, ?, ?)
-      ON CONFLICT(key) DO UPDATE SET value = ?, updated_at = ?
-    `);
-
-    stmt.run(key, serialized, now, serialized, now);
+    const settings = this.store.get('settings');
+    settings[key] = value;
+    this.store.set('settings', settings);
   }
 
   // Downloads
   addDownload(download: Omit<Download, 'id'>): Download {
-    if (!this.db) throw new Error('Database not initialized');
-
     const id = this.generateId();
-
-    const stmt = this.db.prepare(`
-      INSERT INTO downloads (id, url, filename, path, total_bytes, received_bytes, state, start_time, end_time)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `);
-
-    stmt.run(
-      id,
-      download.url,
-      download.filename,
-      download.path,
-      download.totalBytes,
-      download.receivedBytes,
-      download.state,
-      download.startTime.getTime(),
-      download.endTime ? download.endTime.getTime() : null
-    );
-
-    return { id, ...download };
+    const downloads = this.store.get('downloads');
+    const newDownload = { id, ...download };
+    downloads.push(newDownload);
+    this.store.set('downloads', downloads);
+    return newDownload;
   }
 
   updateDownload(id: string, updates: Partial<Download>): void {
-    if (!this.db) throw new Error('Database not initialized');
-
-    const fields: string[] = [];
-    const values: any[] = [];
-
-    if (updates.receivedBytes !== undefined) {
-      fields.push('received_bytes = ?');
-      values.push(updates.receivedBytes);
+    const downloads = this.store.get('downloads');
+    const index = downloads.findIndex(d => d.id === id);
+    if (index !== -1) {
+      downloads[index] = { ...downloads[index], ...updates };
+      this.store.set('downloads', downloads);
     }
-
-    if (updates.state !== undefined) {
-      fields.push('state = ?');
-      values.push(updates.state);
-    }
-
-    if (updates.endTime !== undefined) {
-      fields.push('end_time = ?');
-      values.push(updates.endTime.getTime());
-    }
-
-    if (fields.length === 0) return;
-
-    values.push(id);
-    const stmt = this.db.prepare(`UPDATE downloads SET ${fields.join(', ')} WHERE id = ?`);
-    stmt.run(...values);
   }
 
   getDownloads(): Download[] {
-    if (!this.db) throw new Error('Database not initialized');
-
-    const stmt = this.db.prepare('SELECT * FROM downloads ORDER BY start_time DESC LIMIT 100');
-    const rows = stmt.all();
-
-    return rows.map((row: any) => ({
-      id: row.id,
-      url: row.url,
-      filename: row.filename,
-      path: row.path,
-      totalBytes: row.total_bytes,
-      receivedBytes: row.received_bytes,
-      state: row.state,
-      startTime: new Date(row.start_time),
-      endTime: row.end_time ? new Date(row.end_time) : undefined,
-    }));
+    return this.store.get('downloads')
+      .sort((a, b) => b.startTime.getTime() - a.startTime.getTime())
+      .slice(0, 100);
   }
 
   // Utility
@@ -435,16 +232,14 @@ class StorageService {
   }
 
   // Backup and restore
-  backup(backupPath: string): void {
-    if (!this.db) throw new Error('Database not initialized');
-    this.db.backup(backupPath);
+  backup(_backupPath: string): void {
+    // For electron-store, backup is handled automatically
+    // We could implement custom backup logic here if needed
+    console.log('Backup not implemented for electron-store');
   }
 
   close(): void {
-    if (this.db) {
-      this.db.close();
-      this.db = null;
-    }
+    // No need to close electron-store
   }
 }
 

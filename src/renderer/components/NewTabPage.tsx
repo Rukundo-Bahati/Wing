@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from '../contexts/I18nContext';
-import { GlobeIcon, Search, Building2, BookOpen, Briefcase, Newspaper, GraduationCap, Flag, ArrowRight } from 'lucide-react';
+import { Search, Building2, BookOpen, Briefcase, Newspaper, GraduationCap, Flag, ArrowRight } from 'lucide-react';
 import styles from './NewTabPage.module.css';
 
 interface QuickLink {
@@ -119,7 +119,7 @@ export default function NewTabPage({ onSearch, onNavigate }: NewTabPageProps) {
       <div className={styles['new-tab-content']}>
         <header className={styles['new-tab-header']}>
           <div className={styles['logo-container']}>
-            <GlobeIcon size={64} className={styles['logo-icon']} />
+            <img src="/assets/logo.svg" alt="Wing Logo" className={styles['logo-icon']} />
           </div>
           <h1 className={styles['new-tab-title']}>
             {t('common.app.name')}
