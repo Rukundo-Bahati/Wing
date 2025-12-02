@@ -60,7 +60,7 @@ class SecurityService {
     return url;
   }
 
-  async checkCertificate(url: string): Promise<CertificateInfo | null> {
+  async checkCertificate(): Promise<CertificateInfo | null> {
     // TODO: Implement certificate checking
     // This would require integration with Electron's certificate verification
     return null;
@@ -150,17 +150,17 @@ class SecurityService {
     return this.safeModeEnabled;
   }
 
-  shouldBlockContent(url: string): boolean {
+  shouldBlockContent(_url: string): boolean {
     if (!this.safeModeEnabled) {
       return false;
     }
 
     // Block known adult content domains
-    const blockedDomains = [
+    const blockedDomains: string[] = [
       // Add blocked domains for safe mode
     ];
 
-    return blockedDomains.some((domain) => url.includes(domain));
+    return blockedDomains.some((domain) => _url.includes(domain));
   }
 
   // Content Security Policy

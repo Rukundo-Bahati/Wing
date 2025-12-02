@@ -1,5 +1,4 @@
-  import { useState, useEffect } from 'react';
-import { useTranslation } from '../contexts/I18nContext';
+import { useState } from 'react';
 import { Download, File, Folder, FolderOpen, Pause, Play, X, Check } from 'lucide-react';
 
 interface Download {
@@ -21,7 +20,6 @@ interface DownloadsPanelProps {
 }
 
 export default function DownloadsPanel({ onClose }: DownloadsPanelProps) {
-  const { t } = useTranslation();
   const [downloads, setDownloads] = useState<Download[]>([
     // Mock data for demonstration
     {

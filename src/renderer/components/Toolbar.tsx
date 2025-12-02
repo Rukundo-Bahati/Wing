@@ -1,5 +1,6 @@
 import { useTranslation } from '../contexts/I18nContext';
 import { ArrowLeft, ArrowRight, RotateCw, X, Home, Star, Puzzle, Settings } from 'lucide-react';
+import styles from './Toolbar.module.css';
 
 interface ToolbarProps {
   canGoBack: boolean;
@@ -31,104 +32,58 @@ export default function Toolbar({
   const { t } = useTranslation();
 
   return (
-    <div className="toolbar">
-      <div className="toolbar-left">
+    <div className={styles.toolbar}>
+      <div className={styles['toolbar-group']}>
         <button
-          className="toolbar-button"
+          className={styles['toolbar-button']}
           onClick={onBack}
           disabled={!canGoBack}
           title={t('menu.view.back')}
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={18} />
         </button>
 
         <button
-          className="toolbar-button"
+          className={styles['toolbar-button']}
           onClick={onForward}
           disabled={!canGoForward}
           title={t('menu.view.forward')}
         >
-          <ArrowRight size={20} />
+          <ArrowRight size={18} />
         </button>
 
         {isLoading ? (
-          <button className="toolbar-button" onClick={onStop} title={t('menu.view.stop')}>
-            <X size={20} />
+          <button className={styles['toolbar-button']} onClick={onStop} title={t('menu.view.stop')}>
+            <X size={18} />
           </button>
         ) : (
-          <button className="toolbar-button" onClick={onReload} title={t('menu.view.reload')}>
-            <RotateCw size={20} />
+          <button className={styles['toolbar-button']} onClick={onReload} title={t('menu.view.reload')}>
+            <RotateCw size={18} />
           </button>
         )}
 
-        <button className="toolbar-button" onClick={onHome} title={t('common.actions.open')}>
-          <Home size={20} />
+        <button className={styles['toolbar-button']} onClick={onHome} title={t('common.actions.open')}>
+          <Home size={18} />
         </button>
       </div>
 
-      <div className="toolbar-right">
+      <div className={styles['toolbar-group']}>
         <button
-          className="toolbar-button"
+          className={styles['toolbar-button']}
           onClick={onBookmarks}
           title={t('menu.bookmarks.label')}
         >
-          <Star size={20} />
+          <Star size={18} />
         </button>
 
-        <button className="toolbar-button" onClick={onExtensions} title={t('menu.help.label')}>
-          <Puzzle size={20} />
+        <button className={styles['toolbar-button']} onClick={onExtensions} title={t('menu.help.label')}>
+          <Puzzle size={18} />
         </button>
 
-        <button className="toolbar-button" onClick={onSettings} title={t('settings.title')}>
-          <Settings size={20} />
+        <button className={styles['toolbar-button']} onClick={onSettings} title={t('settings.title')}>
+          <Settings size={18} />
         </button>
       </div>
-
-      <style>{`
-        .toolbar {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 8px 12px;
-          background: #fff;
-          border-bottom: 1px solid #ddd;
-          gap: 8px;
-        }
-
-        .toolbar-left,
-        .toolbar-right {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-        }
-
-        .toolbar-button {
-          width: 36px;
-          height: 36px;
-          border: none;
-          background: transparent;
-          border-radius: 6px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: background 0.2s;
-          color: #333;
-        }
-
-        .toolbar-button:hover:not(:disabled) {
-          background: #f0f0f0;
-        }
-
-        .toolbar-button:active:not(:disabled) {
-          background: #e0e0e0;
-        }
-
-        .toolbar-button:disabled {
-          opacity: 0.3;
-          cursor: not-allowed;
-        }
-      `}</style>
     </div>
   );
 }

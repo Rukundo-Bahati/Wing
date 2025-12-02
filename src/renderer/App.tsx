@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { I18nProvider } from './contexts/I18nContext';
-import TabBar from './components/TabBar';
+import { TabBar } from './components/TabBar';
 import Toolbar from './components/Toolbar';
-import AddressBar from './components/AddressBar';
+import { AddressBar } from './components/AddressBar';
 import NewTabPage from './components/NewTabPage';
 import { Tab } from '../shared/types';
 
@@ -81,87 +81,127 @@ function AppContent() {
   };
 
   return (
-    <div className="browser-window">
-      <TabBar
-        tabs={tabs}
-        activeTabId={activeTabId}
-        onTabClick={handleTabClick}
-        onTabClose={handleCloseTab}
-        onNewTab={handleNewTab}
-        onTabContextMenu={handleTabContextMenu}
-      />
-
-      <Toolbar
-        canGoBack={activeTab?.canGoBack || false}
-        canGoForward={activeTab?.canGoForward || false}
-        isLoading={activeTab?.loading || false}
-        onBack={() => console.log('Back')}
-        onForward={() => console.log('Forward')}
-        onReload={() => console.log('Reload')}
-        onStop={() => console.log('Stop')}
-        onHome={() => handleNavigate('wing://newtab')}
-        onBookmarks={() => console.log('Bookmarks')}
-        onExtensions={() => console.log('Extensions')}
-        onSettings={() => console.log('Settings')}
-      />
-
-      <div className="address-bar-wrapper">
-        <AddressBar
-          url={activeTab?.url || ''}
-          loading={activeTab?.loading || false}
-          securityStatus="unknown"
-          onNavigate={handleNavigate}
-          onSearch={handleSearch}
+    <div className="app-container">
+      <div className="browser-header glass">
+        <div className="window-controls-placeholder" /> {/* For draggable region if needed */}
+        <TabBar
+          tabs={tabs}
+          activeTabId={activeTabId}
+          onTabClick={handleTabClick}
+          onTabClose={handleCloseTab}
+          onNewTab={handleNewTab}
+          onTabContextMenu={handleTabContextMenu}
         />
+        
+        <div className="browser-controls">
+          <Toolbar
+            canGoBack={activeTab?.canGoBack || false}
+            canGoForward={activeTab?.canGoForward || false}
+            isLoading={activeTab?.loading || false}
+            onBack={() => console.log('Back')}
+            onForward={() => console.log('Forward')}
+            onReload={() => console.log('Reload')}
+            onStop={() => console.log('Stop')}
+            onHome={() => handleNavigate('wing://newtab')}
+            onBookmarks={() => console.log('Bookmarks')}
+            onExtensions={() => console.log('Extensions')}
+            onSettings={() => console.log('Settings')}
+          />
+          
+          <div className="address-bar-wrapper">
+            <AddressBar
+              url={activeTab?.url || ''}
+              onUrlChange={(url) => {
+                // TODO: Implement URL change handling
+                console.log('URL changed:', url);
+              }}
+              onNavigate={handleNavigate}
+              onRefresh={() => console.log('Refresh')}
+              isLoading={activeTab?.loading || false}
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="content-area">
+      <main className="content-area">
         {activeTab?.url === 'wing://newtab' ? (
           <NewTabPage onSearch={handleSearch} onNavigate={handleNavigate} />
         ) : (
           <div className="page-placeholder">
-            <p>Page content will be rendered here</p>
-            <p>URL: {activeTab?.url}</p>
-            <p>(WebView integration in Task 5)</p>
+            <div className="placeholder-content">
+              <div className="placeholder-icon">🦋</div>
+              <h2>Page content will be rendered here</h2>
+              <p className="url-display">{activeTab?.url}</p>
+              <p className="note">(WebView integration in Task 5)</p>
+            </div>
           </div>
         )}
-      </div>
+      </main>
 
       <style>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
-        .browser-window {
-          width: 100vw;
-          height: 100vh;
+        .app-container {
           display: flex;
           flex-direction: column;
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+          height: 100vh;
+          background: var(--bg-app);
+        }
+
+        .browser-header {
+          display: flex;
+          flex-direction: column;
+          z-index: 10;
+          box-shadow: var(--shadow-sm);
+        }
+
+        .browser-controls {
+          display: flex;
+          align-items: center;
+          padding: 8px 12px;
+          gap: 12px;
+          border-bottom: 1px solid var(--border-light);
         }
 
         .address-bar-wrapper {
-          padding: 8px 12px;
-          background: #fff;
-          border-bottom: 1px solid #ddd;
+          flex: 1;
+          max-width: 800px;
+          margin: 0 auto;
         }
 
         .content-area {
           flex: 1;
+          position: relative;
           overflow: hidden;
           background: #fff;
         }
 
         .page-placeholder {
           display: flex;
-          flex-direction: column;
           align-items: center;
           justify-content: center;
           height: 100%;
-          color: #666;
-          gap: 10px;
+          background: var(--bg-app);
+          color: var(--text-secondary);
+        }
+
+        .placeholder-content {
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .placeholder-icon {
+          font-size: 48px;
+          filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .url-display {
+          font-family: monospace;
+          background: var(--bg-surface);
+          padding: 4px 12px;
+          border-radius: var(--radius-sm);
+          border: 1px solid var(--border-light);
         }
       `}</style>
     </div>

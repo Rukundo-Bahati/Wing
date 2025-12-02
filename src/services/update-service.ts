@@ -59,7 +59,7 @@ class UpdateService {
       this.sendToRenderer('update:error', error.message);
     });
 
-    autoUpdater.on('download-progress', (progress) => {
+    autoUpdater.on('download-progress', (progress: any) => {
       const updateProgress: UpdateProgress = {
         percent: progress.percent,
         bytesPerSecond: progress.bytesPerSecond,

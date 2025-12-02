@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from '../contexts/I18nContext';
-import { GlobeIcon, Search, Building2, BookOpen, Briefcase, Newspaper, GraduationCap, Flag } from 'lucide-react';
+import { GlobeIcon, Search, Building2, BookOpen, Briefcase, Newspaper, GraduationCap, Flag, ArrowRight } from 'lucide-react';
+import styles from './NewTabPage.module.css';
 
 interface QuickLink {
   id: string;
@@ -113,43 +114,49 @@ export default function NewTabPage({ onSearch, onNavigate }: NewTabPageProps) {
   };
 
   return (
-    <div className="new-tab-page">
-      <div className="new-tab-content">
-        <header className="new-tab-header">
-          <h1 className="new-tab-title">
-            <GlobeIcon size={48} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '12px' }} />
+    <div className={styles['new-tab-page']}>
+      <div className={styles['background-overlay']} />
+      <div className={styles['new-tab-content']}>
+        <header className={styles['new-tab-header']}>
+          <div className={styles['logo-container']}>
+            <GlobeIcon size={64} className={styles['logo-icon']} />
+          </div>
+          <h1 className={styles['new-tab-title']}>
             {t('common.app.name')}
           </h1>
-          <p className="new-tab-tagline">{t('common.app.tagline')}</p>
+          <p className={styles['new-tab-tagline']}>{t('common.app.tagline')}</p>
         </header>
 
-        <form className="search-box" onSubmit={handleSearch}>
+        <form className={`${styles['search-box']} glass`} onSubmit={handleSearch}>
+          <Search size={20} className={styles['search-icon']} />
           <input
             type="text"
-            className="search-input"
+            className={styles['search-input']}
             placeholder={t('common.actions.search')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             autoFocus
           />
-          <button type="submit" className="search-button">
-            <Search size={20} />
+          <button type="submit" className={styles['search-button']}>
+            <ArrowRight size={20} />
           </button>
         </form>
 
-        <div className="content-sections">
+        <div className={styles['content-sections']}>
           {Object.entries(groupedLinks).map(([category, links]) => (
-            <section key={category} className="content-section">
-              <h2 className="section-title">{getCategoryTitle(category)}</h2>
-              <div className="quick-links">
+            <section key={category} className={styles['content-section']}>
+              <h2 className={styles['section-title']}>{getCategoryTitle(category)}</h2>
+              <div className={styles['quick-links']}>
                 {links.map((link) => (
                   <button
                     key={link.id}
-                    className="quick-link"
+                    className={`${styles['quick-link']} glass`}
                     onClick={() => handleQuickLinkClick(link.url)}
                   >
-                    <span className="quick-link-icon">{getIconComponent(link.icon)}</span>
-                    <span className="quick-link-title">{link.title}</span>
+                    <div className={styles['quick-link-icon-wrapper']}>
+                      {getIconComponent(link.icon)}
+                    </div>
+                    <span className={styles['quick-link-title']}>{link.title}</span>
                   </button>
                 ))}
               </div>
@@ -157,152 +164,12 @@ export default function NewTabPage({ onSearch, onNavigate }: NewTabPageProps) {
           ))}
         </div>
 
-        <footer className="new-tab-footer">
-          <p>Murakoze! <Flag size={20} style={{ display: 'inline', verticalAlign: 'middle' }} /></p>
+        <footer className={styles['new-tab-footer']}>
+          <p>Murakoze! <Flag size={16} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }} /></p>
         </footer>
       </div>
 
-      <style>{`
-        .new-tab-page {
-          width: 100%;
-          height: 100%;
-          overflow-y: auto;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
 
-        .new-tab-content {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 60px 20px;
-        }
-
-        .new-tab-header {
-          text-align: center;
-          margin-bottom: 40px;
-          color: white;
-        }
-
-        .new-tab-title {
-          font-size: 48px;
-          font-weight: 700;
-          margin: 0 0 10px 0;
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .new-tab-tagline {
-          font-size: 20px;
-          margin: 0;
-          opacity: 0.9;
-        }
-
-        .search-box {
-          display: flex;
-          max-width: 600px;
-          margin: 0 auto 60px;
-          background: white;
-          border-radius: 50px;
-          padding: 4px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .search-input {
-          flex: 1;
-          border: none;
-          outline: none;
-          padding: 16px 24px;
-          font-size: 16px;
-          background: transparent;
-        }
-
-        .search-button {
-          width: 50px;
-          height: 50px;
-          border: none;
-          background: #667eea;
-          border-radius: 50%;
-          cursor: pointer;
-          font-size: 20px;
-          transition: transform 0.2s;
-        }
-
-        .search-button:hover {
-          transform: scale(1.05);
-        }
-
-        .content-sections {
-          display: grid;
-          gap: 40px;
-        }
-
-        .content-section {
-          background: rgba(255, 255, 255, 0.95);
-          border-radius: 16px;
-          padding: 24px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-title {
-          font-size: 20px;
-          font-weight: 600;
-          margin: 0 0 16px 0;
-          color: #333;
-        }
-
-        .quick-links {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-          gap: 12px;
-        }
-
-        .quick-link {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 8px;
-          padding: 20px;
-          background: white;
-          border: 2px solid #f0f0f0;
-          border-radius: 12px;
-          cursor: pointer;
-          transition: all 0.2s;
-          text-decoration: none;
-          color: inherit;
-        }
-
-        .quick-link:hover {
-          border-color: #667eea;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-        }
-
-        .quick-link-icon {
-          color: #667eea;
-        }
-
-        .quick-link-title {
-          font-size: 14px;
-          font-weight: 500;
-          text-align: center;
-        }
-
-        .new-tab-footer {
-          text-align: center;
-          margin-top: 60px;
-          color: white;
-          opacity: 0.8;
-          font-size: 18px;
-        }
-
-        @media (max-width: 768px) {
-          .new-tab-title {
-            font-size: 36px;
-          }
-
-          .quick-links {
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-          }
-        }
-      `}</style>
     </div>
   );
 }

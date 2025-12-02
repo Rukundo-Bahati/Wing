@@ -2,10 +2,7 @@ import { app } from 'electron';
 import path from 'path';
 import fs from 'fs';
 
-interface SpellcheckResult {
-  correct: boolean;
-  suggestions?: string[];
-}
+
 
 class SpellcheckerService {
   private dictionaries: Map<string, any> = new Map();

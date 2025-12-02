@@ -7,7 +7,7 @@ interface OnboardingFlowProps {
 }
 
 export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
-  const { t, locale, setLocale } = useTranslation();
+  const { locale, setLocale } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useState(locale);
   const [privacySettings, setPrivacySettings] = useState({

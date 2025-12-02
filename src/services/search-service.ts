@@ -244,7 +244,7 @@ class SearchService {
   }
 
   // Kinyarwanda dictionary integration
-  async searchKinyarwandaDictionary(word: string): Promise<string | null> {
+  async searchKinyarwandaDictionary(): Promise<string | null> {
     // TODO: Integrate with actual Kinyarwanda dictionary API
     // For now, return null
     return null;

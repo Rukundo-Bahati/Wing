@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useTranslation } from '../contexts/I18nContext';
 import { RefreshCw, PartyPopper, Download, Check } from 'lucide-react';
 
 interface UpdateInfo {
@@ -16,12 +15,11 @@ interface UpdateProgress {
 }
 
 export default function UpdateNotification() {
-  const { t } = useTranslation();
   const [updateState, setUpdateState] = useState<
     'checking' | 'available' | 'downloading' | 'downloaded' | 'none'
   >('none');
-  const [updateInfo, setUpdateInfo] = useState<UpdateInfo | null>(null);
-  const [progress, setProgress] = useState<UpdateProgress | null>(null);
+  const [updateInfo] = useState<UpdateInfo | null>(null);
+  const [progress] = useState<UpdateProgress | null>(null);
   const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { useTranslation } from '../contexts/I18nContext';
 import { APP_NAME, APP_VERSION } from '../../shared/constants';
-import { Butterfly, MessageCircle, BookOpen, Search, Shield, Globe, Lock, Flag, Heart } from 'lucide-react';
+import { Star, MessageCircle, BookOpen, Search, Shield, Globe, Lock, Flag, Heart } from 'lucide-react';
 
 export default function AboutPage({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ export default function AboutPage({ onClose }: { onClose: () => void }) {
         </button>
 
         <div className="about-header">
-          <div className="wing-logo"><Butterfly size={80} strokeWidth={1.5} /></div>
+          <div className="wing-logo"><Star size={80} strokeWidth={1.5} /></div>
           <h1>{APP_NAME}</h1>
           <p className="version">Version {APP_VERSION}</p>
           <p className="tagline">{t('common.app.tagline')}</p>

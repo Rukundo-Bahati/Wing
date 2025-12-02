@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useTranslation } from '../contexts/I18nContext';
 import { Rocket, Keyboard, Lock, HelpCircle } from 'lucide-react';
 
 interface HelpArticle {
@@ -10,7 +9,6 @@ interface HelpArticle {
 }
 
 export default function HelpCenter({ onClose }: { onClose: () => void }) {
-  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedArticle, setSelectedArticle] = useState<HelpArticle | null>(null);
 

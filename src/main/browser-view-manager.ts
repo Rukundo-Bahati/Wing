@@ -125,7 +125,7 @@ class BrowserViewManager {
       if (this.window) {
         this.window.removeBrowserView(view);
       }
-      // @ts-ignore - webContents.destroy() exists
+      // @ts-expect-error - webContents.destroy() exists
       view.webContents.destroy();
       this.views.delete(tabId);
     }
